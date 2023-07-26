@@ -19,35 +19,44 @@
   </div>
 
   <div class="row">
-  <div class="col-md-10">
-    <div class="list-group">
-      {% for task in tasks %}
-        <div
-            class="list-group-item list-group-item-action {% if task.is_done %}list-group-item-success{% else %}list-group-item-danger{% endif %} mt-3">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ task.content }}</h5>
-            {% if task.deadline_datetime %}
-              <small>Deadline: {{ task.deadline_datetime }}</small>
-            {% endif %}
-          </div>
-          <p class="mb-1">Created: {{ task.created_datetime }}</p>
-
-          <div class="d-flex justify-content-end">
-            <a href="{% url 'toggle_task_status' task.id %}"
-               class="btn btn-sm {% if task.is_done %}btn-warning{% else %}btn-success{% endif %}">
-              {% if task.is_done %}
-                Undo
-              {% else %}
-                Complete
+    <div class="col-md-10">
+      <div class="list-group">
+        {% for task in tasks %}
+          <div
+              class="list-group-item list-group-item-action {% if task.is_done %}list-group-item-success{% else %}list-group-item-danger{% endif %} mt-3">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ task.content }}</h5>
+              {% if task.deadline_datetime %}
+                <small>Deadline: {{ task.deadline_datetime }}</small>
               {% endif %}
-            </a>
-            <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger ml-2">Delete</a>
+            </div>
+            <p class="mb-1">Created: {{ task.created_datetime }}</p>
+
+
+            <div class="row">
+              <div class="col-sm-10">
+                <a href="{% url 'update_task' task.id %}" class="btn btn-sm btn-outline-secondary ml-2">Update</a>
+                <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-outline-danger ml-2">Delete</a>
+
+              </div>
+              <div class="col-sm-2 text-right">
+                <a href="{% url 'toggle_task_status' task.id %}"
+                   class="btn btn-sm {% if task.is_done %}btn-warning{% else %}btn-success{% endif %}">
+                  {% if task.is_done %}
+                    Undo
+                  {% else %}
+                    Complete
+                  {% endif %}
+                </a>
+              </div>
+            </div>
+
+
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </div>
   </div>
-</div>
 
 
 {% endblock %}

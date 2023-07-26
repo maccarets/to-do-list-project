@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
-from to_do.forms import TaskForm
-from to_do.models import Task
+from to_do.forms import TaskForm, TagForm
+from to_do.models import Task, Tag
 
 
 def index(request):
@@ -26,9 +26,41 @@ def delete_task(request, task_id):
     return redirect('index')
 
 
-class AddTaskView(CreateView):
+class TaskAddView(CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'add_task.html'
+    template_name = 'task_form.html'
     success_url = reverse_lazy('index')
 
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_form.html'
+    success_url = reverse_lazy('index')
+
+
+class TagListView(ListView):
+    model = Tag
+    template_name = 'tag_list.html'
+    context_object_name = 'tags'
+
+
+class TagCreateView(CreateView):
+    model = Tag
+    template_name = "tag_form.html"
+    form_class = TagForm
+    success_url = reverse_lazy('tag_list')
+
+
+class TagUpdateView(UpdateView):
+    model = Tag
+    form_class = TagForm
+    template_name = 'tag_form.html'
+    success_url = reverse_lazy('tag_list')
+
+
+def delete_tag(request, pk):
+    task = Tag.objects.get(pk=pk)
+    task.delete()
+    return redirect('tag_list')

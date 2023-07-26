@@ -1,3 +1,5 @@
+<!-- your_app_name/templates/home.html -->
+
 {% extends "base.html" %}
 
 {% block title %}
@@ -6,22 +8,44 @@
 
 {% block content %}
   <h1>Welcome to To-Do List App</h1>
- <h1>Todo List</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>
-                {{ task.content }} (Created: {{ task.created_datetime }})
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2 class="d-inline">Todo List</h2>
+      </div>
+      <div class="col-md-4 text-right">
+        <a href="{% url 'add_task' %}" class="btn btn-primary mt-3">Add New Task</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="list-group">
+          {% for task in tasks %}
+            <div
+                class="list-group-item list-group-item-action {% if task.is_done %}list-group-item-success{% else %}list-group-item-danger{% endif %} mt-3">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ task.content }}</h5>
                 {% if task.deadline_datetime %}
-                    - Deadline: {{ task.deadline_datetime }}
+                  <small>Deadline: {{ task.deadline_datetime }}</small>
                 {% endif %}
-                {% if not task.is_done %}
-                    - <a href="{% url 'toggle_task_status' task.id %}">Complete</a>
-                {% else %}
-                    - <a href="{% url 'toggle_task_status' task.id %}">Undo</a>
-                {% endif %}
-                - <a href="{% url 'delete_task' task.id %}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_task' %}">Add New Task</a>
+              </div>
+              <p class="mb-1">Created: {{ task.created_datetime }}</p>
+              <div class="d-flex justify-content-end">
+                <a href="{% url 'toggle_task_status' task.id %}"
+                   class="btn btn-sm {% if task.is_done %}btn-warning{% else %}btn-success{% endif %}">
+                  {% if task.is_done %}
+                    Undo
+                  {% else %}
+                    Complete
+                  {% endif %}
+                </a>
+                <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger ml-2">Delete</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -3,6 +3,12 @@ from django import forms
 from to_do.models import Task, Tag
 
 
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ["name"]
+
+
 class TaskForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.all(), widget=forms.CheckboxSelectMultiple
@@ -16,9 +22,3 @@ class TaskForm(forms.ModelForm):
                 attrs={"type": "datetime-local"}, format="%Y-%m-%dT%H:%M"
             ),
         }
-
-
-class TagForm(forms.ModelForm):
-    class Meta:
-        model = Tag
-        fields = ["name"]

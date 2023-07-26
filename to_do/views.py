@@ -31,3 +31,4 @@ class AddTaskView(CreateView):
     form_class = TaskForm
     template_name = 'add_task.html'
     success_url = reverse_lazy('index')
+

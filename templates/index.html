@@ -11,7 +11,7 @@
 
   <div class="row">
     <div class="col-md-8">
-      <h2 class="d-inline">ToDo List</h2>
+      <h2 class="my-3">ToDo List</h2>
     </div>
     <div class="col-md-4 text-right">
       <a href="{% url 'add_task' %}" class="btn btn-primary mt-3">Add New Task</a>
@@ -31,6 +31,7 @@
             {% endif %}
           </div>
           <p class="mb-1">Created: {{ task.created_datetime }}</p>
+
           <div class="d-flex justify-content-end">
             <a href="{% url 'toggle_task_status' task.id %}"
                class="btn btn-sm {% if task.is_done %}btn-warning{% else %}btn-success{% endif %}">

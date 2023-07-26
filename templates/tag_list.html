@@ -25,8 +25,8 @@
         <div class="card-body">
           <h5 class="card-title">{{ tag.name }}</h5>
           <div class="d-flex justify-content-end">
-            <a href="{% url 'update_tag' tag.pk %}" class="btn btn-sm btn-primary">Update</a>
-            <a href="{% url 'delete_tag' tag.pk %}" class="btn btn-sm btn-danger ml-2">Delete</a>
+            <a href="{% url 'update_tag' tag.pk %}" class="btn btn-sm btn-outline-primary me-1">Update</a>
+            <a href="{% url 'delete_tag' tag.pk %}" class="btn btn-sm btn-outline-danger ml-1">Delete</a>
           </div>
         </div>
       </div>
